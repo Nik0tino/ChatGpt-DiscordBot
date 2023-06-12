@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const axios = require('axios');
+const { Client, Intents } = require('discord.js');
+
 app.get('/', (req, res) => {
   res.send('Predators Manager Started Successfully !');
 });
@@ -9,8 +11,7 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-const { Client, Intents, GatewayIntentBits, MessageEmbed, VoiceConnectionStatus } = require('discord.js');
-const { joinVoiceChannel } = require('@discordjs/voice');
+
 const client = new Client({
   intents: [
     Intents.FLAGS.GUILDS,
@@ -33,40 +34,42 @@ const client = new Client({
 
 client.once('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
-  client.user.setActivity({ name: "OpenAi Chat", type: "PLAYING" })
-  client.user.setStatus('idle')
-  
+  client.user.setActivity({ name: "OpenAi Chat", type: "PLAYING" });
+  client.user.setStatus('idle');
 });
 
-
-//Define ChatGPT Function
-  async function getChatGPTResponse(message) {
-    const apiUrl = 'https://api.openai.com/v1/chat/completions';
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer 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',
-    };
-    const payload = {
-      'model': 'gpt-3.5-turbo',
-      'messages': [{'role': 'system', 'content': 'You are a user.'}, {'role': 'user', 'content': message}],
-    };
-    try {
-      const response = await axios.post(apiUrl, payload, { headers });
-      const reply = response.data.choices[0].message.content;
-      return reply;
-    } catch (error) {
-      console.error('Failed to get AI response:', error);
-      return 'Sorry, an error occurred.';
-    }
+// Define ChatGPT Function
+async function getChatGPTResponse(message) {
+  const apiUrl = 'https://api.openai.com/v1/chat/completions';
+  const apiKey = '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'; // Replace with your OpenAI API key
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${apiKey}`,
+  };
+  const payload = {
+    'model': 'gpt-3.5-turbo',
+    'messages': [
+      { 'role': 'system', 'content': 'You are a user.' },
+      { 'role': 'user', 'content': message },
+    ],
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const reply = response.data.choices[0].message.content;
+    return reply;
+  } catch (error) {
+    console.error('Failed to get AI response:', error);
+    return 'Sorry, an error occurred.';
   }
-  client.on('messageCreate', async (message) => {
-    if (message.author.bot) return; // Ignore messages from other bots
-    if (message.channel.id === "1117598652815376385") {
+}
+
+client.on('messageCreate', async (message) => {
+  if (message.author.bot) return; 
+  if (message.channel.id === "1117598652815376385") { //id d room
     const content = message.content;
     const response = await getChatGPTResponse(content);
     message.reply(response);
-}
-  });
-    
+  }
+});
 
-client.login('MTExNjQ5NDc1NzU2MTExMDUzOA.GG1CEW.JF5wGG9bw_cH8QXaXHKg3MRht6zPkiYmaI9MfM');
+client.login(''); // token hna
