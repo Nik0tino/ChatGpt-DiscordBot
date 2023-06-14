@@ -28,7 +28,7 @@ client.on('ready', () => {
     }
   }
   client.on('messageCreate', async (message) => {
-    if (message.author.bot) return; // Ignore messages from other bots
+    if (message.author.bot) return; 
     if (message.channel.id === "1117657503191273482") {
     const content = message.content;
     const response = await getChatGPTResponse(content);
@@ -36,5 +36,5 @@ client.on('ready', () => {
 }
   });
 
-// Log in to Discord with your bot token
-client.login(''); // Replace with your Discord bot token
+
+client.login(process.env.token);
