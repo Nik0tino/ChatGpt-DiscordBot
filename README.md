@@ -15,9 +15,8 @@ The ChatGPT Discord Bot is an AI-powered bot built with Discord.js and powered b
 ## Prerequisites
 
 - Node.js (v12 or higher)
-- Discord.js (v13 or higher)
-- OpenAI GPT-3.5 API credentials
-
+- Discord.js (v13)
+- OpenAi Api [Here](https://platform.openai.com/account/api-keys)
 ## Setup
 
 1. Clone this repository to your local machine.
@@ -27,12 +26,12 @@ The ChatGPT Discord Bot is an AI-powered bot built with Discord.js and powered b
    ```
 3. Obtain OpenAI GPT-3.5 API credentials by signing up for the GPT-3.5 subscription plan.
 4. Create a new Discord bot application in the Discord Developer Portal.
-5. Copy the bot token and add it to the `.env` file as `DISCORD_TOKEN=your_bot_token_here`.
+5. Copy the bot token and add it to the `.env` file as `token=your_bot_token_here`.
 6. Replace the placeholder values in the `.env` file with your GPT-3.5 API credentials.
 7. Invite the bot to your Discord server using the OAuth2 URL generated in the Discord Developer Portal.
 8. Run the bot using the following command:
    ```
-   node bot.js
+   node server.js
    ```
 9. The bot is now active and ready to engage in conversations on your Discord server.
 
